@@ -5,7 +5,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
+// Register CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins("http://localhost:5173") // Vue dev server
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 var app = builder.Build();
+
+// Enable CORS before mapping controllers
+app.UseCors("AllowFrontend");
+
 app.MapControllers();
 
 // Configure the HTTP request pipeline.
