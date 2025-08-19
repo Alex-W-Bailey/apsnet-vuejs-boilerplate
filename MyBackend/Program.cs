@@ -13,6 +13,13 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5173") // Vue dev server
             .AllowAnyHeader()
             .AllowAnyMethod());
+
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // your Vite dev server
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();

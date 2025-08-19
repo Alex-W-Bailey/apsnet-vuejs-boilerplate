@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./MyBackend
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    networks:
+      - mynet
+
+  frontend:
+    build: ./my-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mynet
+
+networks:
+  mynet:
